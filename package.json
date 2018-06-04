@@ -1,0 +1,15 @@
+{
+  "name": "test-koa",
+  "version": "1.0.0",
+  "description": "学习koa",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "author": "chensy",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "2.5.1",
+    "koa-router": "^7.4.0"
+  }
+}
