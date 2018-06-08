@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'App',
+  name: 'App'
 };
 </script>
 
@@ -16,5 +16,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #232323;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 </style>
