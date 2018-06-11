@@ -4,6 +4,7 @@ const static = require('koa-static');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const Sequelize = require('sequelize');
+const jwt = require('koa-jwt');
 
 const router = require('./routes/index')
 
@@ -25,5 +26,5 @@ app.use(router.routes()).use(router.allowedMethods());
 
 // 监听启动端口
 app.listen(5000, () => {
-  console.log('app started at port 5000...');
+  console.log('The server is running at http://localhost:5000/');
 });

@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        username: 'admin',
+        username: 'chensy',
         password: '123123'
       },
       rules: {
@@ -40,8 +40,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          localStorage.setItem('ms_username', this.ruleForm.username);
-          this.$router.push('/');
+          this.$http.post('/api/login', this.ruleForm)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           // console.log('error submit!!');
           return false;

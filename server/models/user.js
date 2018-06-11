@@ -1,5 +1,4 @@
 /* jshint indent: 2 */
-const db = require('../config/db');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user', {
