@@ -3,15 +3,25 @@ const Koa = require('koa');
 const static = require('koa-static');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
-const Sequelize = require('sequelize');
 const jwt = require('koa-jwt');
 
-const router = require('./routes/index')
+const router = require('./routes/index');
+const err = require('./middlewares/error');
+const secret = require('./config/secret');
 
 const app = new Koa();
 
 // 配置控制台日志中间件
 app.use(logger())
+
+// 判断token
+app.use(err)
+
+// JWT认证中间件
+app.use(jwt({secret}).unless({
+  path: [/^\/api\/login/, /^\/api\/regist/]
+}))
+
 
 // 配置ctx.body解析中间件
 app.use(bodyparser())

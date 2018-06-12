@@ -33,7 +33,7 @@ module.exports = {
     }],
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
-    // 调整 0
+    // 调整
     // 给参数从新赋值
     'no-param-reassign': 0,
     // 字符串最大长度
@@ -54,5 +54,7 @@ module.exports = {
     "no-multi-assign": 0,
     // for-in for-of 不可用
     "no-restricted-syntax": 0,
+    // 禁止使用console
+    "no-console": 0
   }
 }

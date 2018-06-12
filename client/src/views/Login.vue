@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <div class="ms-title">后台管理系统</div>
+    <div class="ms-title">admin</div>
     <div class="ms-login">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
         <el-form-item prop="username">
@@ -23,8 +23,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        username: 'chensy',
-        password: '123123'
+        username: 'admin',
+        password: '123456'
       },
       rules: {
         username: [
@@ -42,7 +42,14 @@ export default {
         if (valid) {
           this.$http.post('/api/login', this.ruleForm)
             .then((res) => {
-              console.log(res);
+              if (res.data.s) {
+                this.$router.push('/List');
+              } else {
+                this.$message({
+                  message: res.data.m,
+                  type: 'error'
+                });
+              }
             })
             .catch((err) => {
               console.log(err);
