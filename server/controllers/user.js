@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 const User = db.import('../models/user');
 
-const secret = require('../config/secret');
+const config = require('../config/config');
 
 module.exports = class userController {
   // 登录
@@ -27,12 +27,12 @@ module.exports = class userController {
       // 生成token 返回客户端
       if (isEqual) {
         msg.s = 1;
-        msg.m = '登录成功';
+        msg.m = 'ok';
         const userToken = {
-          name: user.username,
+          name: user.user_name,
           id: user.id
         }
-        msg.token = jwt.sign(userToken, secret, { expiresIn: '1h' });
+        msg.token = jwt.sign(userToken, config.secret, { expiresIn: '12h' });
       } else {
         msg.m = '密码错误';
       }
@@ -61,7 +61,7 @@ module.exports = class userController {
         password: data.password
       })
       msg.s = 1;
-      msg.m = '注册成功';
+      msg.m = 'ok';
     }
     ctx.body = msg
   }
@@ -71,12 +71,11 @@ module.exports = class userController {
     // 初始化
     const msg = {};
     msg.s = 0;
-    const user = await User.find();
+    const user = ctx.user
     if(user) {
-      console.log(user);
       msg.s = 1;
-      msg.d = user;
-      msg.m = '成功';
+      msg.m = 'ok';
+      msg.d = user.name;
     }
     ctx.body = msg;
   }

@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import api from '../api/api';
+
 export default {
   data() {
     return {
@@ -37,13 +40,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'UserLogin'
+    ]),
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('/api/login', this.ruleForm)
+          api.userLogin(this.ruleForm)
             .then((res) => {
               if (res.data.s) {
-                this.$router.push('/List');
+                this.UserLogin(res.data.token);
+                const redirectUrl = this.$route.query.redirect || '/';
+                this.$router.push({
+                  path: redirectUrl
+                });
               } else {
                 this.$message({
                   message: res.data.m,

@@ -1,9 +1,22 @@
 const db = require('../config/db');
 const List = db.import('../models/list');
 
-module.export = class listController {
-  // 列表
-  static async getList() {
+module.exports = class listController {
+  // 获取列表
+  static async getList(ctx) {
+    const list = await List.findAll({
+      where: {
+        user_id: ctx.user.id
+      },
+      attributes: ['content', 'status']
+    })
+    ctx.body = {
+      s: 1,
+      d: list
+    }
+  }
+
+  static async createList(ctx) {
 
   }
 }

@@ -1,25 +1,23 @@
 const jwt = require('jsonwebtoken');
-const secret = require('../config/secret')
+const config = require('../config/config')
 
-module.exports = (ctx, next) => {
-  return next().catch((err) => {
+module.exports = async (ctx, next) => {
+  const token = ctx.header.authorization;
+  if(token) {
     try {
-      const token = ctx.header.token
-      console.log(token)
-      if(token) {
-        jwt.verify(token, secret, function(err, decoded) {
-          console.log(err)
-          console.log(decoded)
-        });
+      let decoded = await jwt.verify(token.split(' ')[1], config.secret);
+      ctx.user = {
+        name: decoded.name,
+        id: decoded.id
       }
-    } catch (err) {
-      if (err.status === 401) {
-        ctx.body = {
-          error: err.originalError ? err.originalError.message : err.message,
-        };
-      } else {
-        throw err;
-      }
+    } catch(err) {
+      console.log('token verify fail: ', err)
     }
-  });
+  } else {
+    ctx.body = {
+      s: 0,
+      m: 'token不存在'
+    }
+  }
+  await next();
 }

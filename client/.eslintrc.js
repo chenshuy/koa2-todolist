@@ -55,6 +55,8 @@ module.exports = {
     // for-in for-of 不可用
     "no-restricted-syntax": 0,
     // 禁止使用console
-    "no-console": 0
+    "no-console": 0,
+    "import/no-dynamic-require": 0,
+    "global-require": 0
   }
 }

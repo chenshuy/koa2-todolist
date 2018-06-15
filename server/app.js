@@ -7,24 +7,21 @@ const jwt = require('koa-jwt');
 
 const router = require('./routes/index');
 const err = require('./middlewares/error');
-const secret = require('./config/secret');
+const config = require('./config/config');
 
 const app = new Koa();
+
+// 验证token
+app.use(err)
+
+// 配置ctx.body解析中间件
+app.use(bodyparser())
 
 // 配置控制台日志中间件
 app.use(logger())
 
-// 判断token
-app.use(err)
-
 // JWT认证中间件
-app.use(jwt({secret}).unless({
-  path: [/^\/api\/login/, /^\/api\/regist/]
-}))
-
-
-// 配置ctx.body解析中间件
-app.use(bodyparser())
+app.use(jwt({secret: config.secret}).unless({path: [/^\/api\/login/, /^\/api\/regist/]}))
 
 // 配置静态资源加载中间件
 app.use(static(
