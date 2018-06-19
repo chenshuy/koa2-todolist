@@ -1,6 +1,4 @@
-
-export const LOGIN = 'LOGIN';
-
-export const LOGOUT = 'LOGOUT';
-
-export const USERNAME = 'USERNAME';
+// user
+export const LOGIN = 'LOGIN'; // 登录
+export const LOGOUT = 'LOGOUT'; // 退出
+export const USERINFO = 'USERINFO'; // 用户信息

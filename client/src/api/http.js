@@ -1,18 +1,19 @@
 import axios from 'axios';
-import store from '../store/index';
-import router from '../router/index';
+import store from '../store';
+import router from '../router';
 
 // 生成实例
-const http = axios.create();
-http.defaults.timeout = 5000;
+const instance = axios.create({
+  baseURL: '/api/',
+  timeout: 2500
+});
 
-axios.interceptors.request.use = http.interceptors.request.use;
+instance.defaults.timeout = 5000;
 
-// request 拦截器
-http.interceptors.request.use(
+// 请求拦截器
+instance.interceptors.request.use(
   (config) => {
     if (store.getters.token) {
-      console.log(store.getters.token);
       config.headers.Authorization = `Bearer ${store.getters.token}`;
     }
     return config;
@@ -22,8 +23,9 @@ http.interceptors.request.use(
     Promise.reject(error);
   }
 );
-// response拦截器
-http.interceptors.response.user(
+
+// 响应拦截器
+instance.interceptors.response.use(
   response => response,
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -37,8 +39,8 @@ http.interceptors.response.user(
         }
       });
     }
-    return Promise.reject(error.response);
+    Promise.reject(error.response);
   }
 );
 
-export default http;
+export default instance;

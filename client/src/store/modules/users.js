@@ -3,7 +3,7 @@ import * as types from '../types';
 const users = {
   state: {
     token: localStorage.getItem('token') || null,
-    userName: ''
+    userInfo: ''
   },
   getters: {
     token: state => state.token
@@ -17,8 +17,8 @@ const users = {
       localStorage.removeItem('token');
       state.token = null;
     },
-    [types.USERNAME]: (state, data) => {
-      state.userName = data;
+    [types.USERINFO]: (state, data) => {
+      state.userInfo = data;
     }
   },
   actions: {
@@ -31,8 +31,8 @@ const users = {
       commit(types.LOGOUT);
     },
     // 获取用户信息
-    UserName({ commit }, data) {
-      commit(types.USERNAME, data);
+    UserInfo({ commit }, data) {
+      commit(types.USERINFO, data);
     }
   }
 };

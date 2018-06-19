@@ -7,9 +7,12 @@ const router = new Router({
 })
 
 router
-  .post('/login', userController.login) // 登录
   .post('/regist', userController.regist) // 注册
-  .get('/userInfo', userController.userInfo) // 登录
-  .get('/getList', listController.getList) // 列表
+  .post('/login', userController.login) // 登录
+  .get('/userInfo', userController.userInfo) // 获取用户信息
+  .get('/getList', listController.getList) // 获取列表
+  .post('/createList', listController.createList) // 创建列表
+  .post('/delList', listController.delList) // 删除列表
+  .post('/updateList', listController.updateList) // 更新列表状态
 
 module.exports = router
