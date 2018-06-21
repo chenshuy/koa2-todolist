@@ -12,7 +12,7 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
         </div>
-        <p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码随便填。</p>
+        <router-link to="/regist" style="font-size:12px;line-height:30px;color:#999;">注册</router-link>
       </el-form>
     </div>
   </div>
@@ -47,16 +47,16 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           api.userLogin(this.ruleForm)
-            .then((res) => {
-              if (res.data.s) {
-                this.UserLogin(res.data.token);
+            .then(({ data }) => {
+              if (data.s) {
+                this.UserLogin(data.token);
                 const redirectUrl = this.$route.query.redirect || '/';
                 this.$router.push({
                   path: redirectUrl
                 });
               } else {
                 this.$message({
-                  message: res.data.m,
+                  message: data.m,
                   type: 'error'
                 });
               }

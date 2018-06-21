@@ -49,11 +49,11 @@ export default {
     // 获取list数据
     getList() {
       api.getList()
-        .then((res) => {
-          if (res.data.s) {
+        .then(({ data }) => {
+          if (data.s) {
             const listC = [];
             const listA = [];
-            res.data.d.forEach((item) => {
+            data.d.forEach((item) => {
               if (item.status) {
                 listC.push(item);
               } else {
@@ -63,7 +63,7 @@ export default {
             this.listComplate = listC;
             this.listActive = listA;
           } else {
-            this.$message.error(res.m);
+            this.$message.error(data.m);
           }
         });
     },
@@ -78,12 +78,12 @@ export default {
         status: 0
       };
       api.createList(fromData)
-        .then((res) => {
-          if (res.data.s) {
+        .then(({ data }) => {
+          if (data.s) {
             this.getList();
             this.inputText = '';
           } else {
-            this.$message.error(res.data.m);
+            this.$message.error(data.m);
           }
         });
     },
@@ -102,9 +102,9 @@ export default {
         this.listComplate.splice(index, 1);
       }
       api.updateList(fromData)
-        .then((res) => {
-          if (!res.data.s) {
-            this.$message.error(res.data.m);
+        .then(({ data }) => {
+          if (!data.s) {
+            this.$message.error(data.m);
           }
         });
     },
@@ -112,11 +112,11 @@ export default {
     delList(List, index) {
       api.delList({
         id: List[index].id
-      }).then((res) => {
-        if (res.data.s) {
+      }).then(({ data }) => {
+        if (data.s) {
           List.splice(index, 1);
         } else {
-          this.$message.error(res.data.m);
+          this.$message.error(data.m);
         }
       });
     }
